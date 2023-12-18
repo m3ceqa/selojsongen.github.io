@@ -4,11 +4,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>JSON Generator</title>
+
+    <title>Selenium JSON Generator</title>
+
+    <link rel="icon" type="image/x-icon" href="https://cdn.icon-icons.com/icons2/2699/PNG/512/infor_logo_icon_169669.png">
     <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css" />
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -18,7 +22,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
 </head>
 
 <style>
@@ -27,6 +31,29 @@
         background-size: auto;
         font-family: 'Montserrat'
     }
+
+    /* pre {
+        position: relative;
+    } */
+
+    #copy-button {
+        /* position: absolute; */
+        /* top: 2px; */
+        /* right: 10px; */
+        cursor: pointer;
+        color: #fff;
+        background: rgb(6, 157, 228);
+        border-radius: 0.5em;
+        padding: 6px 7px;
+        font-size: small;
+        text-transform: uppercase;
+        box-shadow: 0.2em 0.2em 1em rgba(85, 85, 85, 0.6);
+    }
+
+    #copy-button:hover {
+        /* color: #9b9b9b; */
+        background-color: rgb(0, 142, 207);
+    }
 </style>
 
 <body>
@@ -34,16 +61,21 @@
 
     <section>
         <div class="container my-5 py-5 text-dark shadow-lg rounded" >
+            <!-- <div class="row d-flex justify-content-center px-4" >
+                <div class="alert alert-primary w-100" role="alert">
+                    This is a JSON generator for SeleniumTestPlanner
+                </div>
+            </div> -->
             <div class="row d-flex justify-content-center p-3" >
                 <div class="col">
                     <div class="w-100">
-                        <h5 class="font-weight-bold">Enter test plans below: </h5>
+                        <h5 class="font-weight-bold mb-4">Enter test plans below: </h5>
                         <div class="form-outline">
                             <textarea class="form-control shadow-sm" id="area" rows="6"></textarea>
                         </div>
                         <div class="d-flex justify-content-between mt-3">
                             <button type="submit" id="submit-button" class="btn btn-success text-uppercase shadow rounded"
-                                pys-onClick="my_function" onfocus=>
+                                pys-onClick="my_function">
                                 Generate
                                 <py-script src="./main.py"></py-script>
                             </button>
@@ -55,7 +87,11 @@
                 </div>
                 <div class="col">
                     <div class="w-100">
-                        <h5 class="font-weight-bold">Generated JSON: </h5>
+                        <div class="d-flex justify-content-between mb-3">
+                            <h5 class="font-weight-bold">Generated JSON: </h5>
+                            <span id="copy-button" onclick="copyCodeBlock()">Copy</span>
+                        </div>
+                        
                         <div class="form-outline bg-dark rounded text-monospace p-3">
                             <pre id="test-output" class="text-monospace text-white"></pre>
                         </div>
@@ -64,7 +100,8 @@
             </div>
         </div>
         <div class="row d-flex justify-content-center p-3">
-            Infor &copy; M3 CloudSuite QA
+            <p class="font-weight-bold">Infor &copy; M3 CloudSuite QA</p>
+            <!-- <p class="font-italic">Italic text.</p> -->
         </div>
     </section>
 
@@ -72,6 +109,30 @@
         function resetFields() {
             document.getElementById('area').value = '';
             document.getElementById('test-output').innerHTML = '';
+        }
+
+        function copyCodeBlock() {
+            var preTag = document.getElementById('test-output');
+            var copyButton = document.getElementById('copy-button');
+            const range = document.createRange();
+            range.selectNode(preTag);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+
+            try {
+                document.execCommand("copy");
+                copyButton.innerText = "Copied!";
+                setTimeout(function(){
+                copyButton.innerText = "Copy";
+                }, 2000);
+            } catch (err) {
+                console.error("Unable to copy text:", err);
+            } finally {
+                copyButton.style.display = "inline";
+                window.getSelection().removeAllRanges();
+            }
+
+            // alert("Copied the text: " + range);
         }
     </script>
 
