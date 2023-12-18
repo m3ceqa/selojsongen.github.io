@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Greetings!</title>
+        <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css" />
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    </head>
+
+    <body>
+        <div>Enter test plans here below: </div>
+        <textarea id="area" cols="30" rows="10"></textarea>
+        <button id="submit-button" type="submit" pys-onClick="my_function">OK</button>
+        
+        <div>Generated SeleniumTestPlanner JSON:</div>
+        <pre id="test-output"></pre>
+        <py-script src="./main.py"></py-script>
+
+        <!-- <div id="test-output">
+            <script>
+                document.getElementById("test-output").innerHTML = JSON.stringify(data, undefined, 2);
+            </script>
+        </div> -->
+
+    </body>
+
+</html>
